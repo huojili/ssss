@@ -1,0 +1,39 @@
+<html>
+<head>
+</head>
+<body>
+ 
+    <div></div>
+    <script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>  
+    <script src="https://cdn.bootcss.com/showdown/1.3.0/showdown.min.js"></script>
+	<script>    
+    $(function(){    
+        $.ajax({    
+            //请求方式    
+            type:"GET",    
+            //文件位置    
+            url:"https://api.github.com/repos/zzuuoo/blog/issues",  
+            //返回数据格式为json,也可以是其他格式如    
+            dataType: "json",    
+            //请求成功后要执行的函数，拼接html    
+            success: function(data){    
+                var converter = new showdown.Converter(); //初始化转换器
+                // var htmlcontent  = converter.makeHtml(content); //将MarkDown转为html格式的内容
+                var str="<ul>";    
+                $.each(data,function(i,n){    
+                    str+="<li>"+"url:"+n.url+"</li>";  
+                    str+="<li>"+"标题:"+n.title+"</li>";  
+                    str+="<li>"+"文章:"+converter.makeHtml(n.body)+"</li>";  
+
+                });    
+                str+="</ul>";    
+                $("div").append(str);    
+            }    
+        });    
+    });    
+    </script> 
+
+</body>
+
+</div>
+</html>
